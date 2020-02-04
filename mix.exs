@@ -21,7 +21,7 @@ defmodule RaKv.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ra, "~> 0.9"}
+      {:ra, "~> 1.0.5"}
     ]
   end
 end
