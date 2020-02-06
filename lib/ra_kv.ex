@@ -28,7 +28,7 @@ defmodule RaKv do
     :ra.process_command(serverid, {:get, key})
   end
 
-  def set(serverid, key, feed = %Dat.Hypercore.Feed{}, index, config = {:config, _timeout, _value_encoding}) do
+  def set(serverid, key, feed = %Dat.Hypercore.Feed{}, index, config = %Dat.Hypercore.Config{}) do
     :ra.process_command(serverid, {:set, key, feed, index, config})
   end
 
