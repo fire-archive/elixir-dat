@@ -36,11 +36,11 @@ defmodule RaKv.Machine do
   @impl :ra_machine
   def apply(
         _meta,
-        {:set, key, feed = %Dat.Hypercore.Feed{}, _index,
+        {:set, key, feed = %Dat.Hypercore.Feed{}, index,
          _config = %Dat.Hypercore.Config{}},
         state
       )
-      when is_binary(key) and is_binary(feed) do
+      when is_binary(key) and is_binary(feed) and is_number(index) do
     {Map.put(state, key, feed), :inserted}
   end
 
@@ -54,7 +54,7 @@ defmodule RaKv.Machine do
   end
 
   @impl :ra_machine
-  def apply(_meta, {:append, key, block}, state) when is_binary(block) do
+  def apply(_meta, {:append, key, block}, state) when is_binary(key) and is_binary(block) do
     feed = Map.get(state, key, nil)
     {Map.put(state, key, feed + block), :inserted}
   end
