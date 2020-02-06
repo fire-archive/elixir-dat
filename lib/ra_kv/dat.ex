@@ -6,31 +6,7 @@ defmodule Dat.Hypercore.Config do
   defstruct value_encoding: "binary"
 end
 
-defmodule Dat.Hypercore.Feed do
-  @max_feed_size 8 * 1024 * 1024
-  @max_message_size 10 * 1024 * 1024
-
-  defstruct bitfield: '',
-            tree: '',
-            signatures: [],
-            key: '',
-            secret_key: '',
-            config: %Dat.Hypercore.Config{}
-end
-
 defmodule Dat.Hypercore do
-  def new(config) do
-  end
-
-  def append(feed, block) do
-    # blocking until data written
-    {:error, 0}
-  end
-
-  def set(feed, index, {:config, timeout, value_encoding}) do
-    # blocking until data downloaded
-    {:error, %{}}
-  end
 
   def get_batch(feed, start, _end, {:config, timeout, value_encoding}) do
     []

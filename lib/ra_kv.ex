@@ -20,12 +20,19 @@ defmodule RaKv do
 
   ## Client API
 
-  def put(serverid, key, value) do
-    :ra.process_command(serverid, {:put, key, value})
+  def new(serverid) do
+    :ra.process_command(serverid, {:new})
   end
 
   def get(serverid, key) do
     :ra.process_command(serverid, {:get, key})
   end
 
+  def set(serverid, key, feed = %Dat.Hypercore.Feed{}, index, config = {:config, _timeout, _value_encoding}) do
+    :ra.process_command(serverid, {:set, key, feed, index, config})
+  end
+
+  def append(serverid, key, block) do
+    :ra.process_command(serverid, {:append, key, block})
+  end
 end
