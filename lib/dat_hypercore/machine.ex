@@ -1,3 +1,11 @@
+defmodule Dat.Hypercore.Config do
+  @feed_size 8 * 1024 * 1024
+  @message_size 10 * 1024 * 1024
+
+  # "json" or "utf-8"
+  defstruct value_encoding: "binary"
+end
+
 defmodule Dat.Hypercore.Feed do
   @max_feed_size 8 * 1024 * 1024
   @max_message_size 10 * 1024 * 1024
@@ -10,15 +18,7 @@ defmodule Dat.Hypercore.Feed do
             config: %Dat.Hypercore.Config{}
 end
 
-defmodule Dat.Hypercore.Config do
-  @feed_size 8 * 1024 * 1024
-  @message_size 10 * 1024 * 1024
-
-  # "json" or "utf-8"
-  defstruct value_encoding: "binary"
-end
-
-defmodule RaKv.Machine do
+defmodule Dat.Hypercore.Machine do
   @behaviour :ra_machine
 
   @impl :ra_machine

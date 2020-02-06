@@ -1,9 +1,9 @@
-defmodule RaKv.MixProject do
+defmodule Dat.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :elixir_rakv,
+      app: :elixir_dat,
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
@@ -21,7 +21,7 @@ defmodule RaKv.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ra, "~> 1.0.5"}
+      {:ra, "~> 1.0.6"}
     ]
   end
 end

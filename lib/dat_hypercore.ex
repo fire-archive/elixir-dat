@@ -1,12 +1,5 @@
-defmodule Dat.Hypercore.Config do
-  @feed_size 8 * 1024 * 1024
-  @message_size 10 * 1024 * 1024
 
-  # "json" or "utf-8"
-  defstruct value_encoding: "binary"
-end
-
-defmodule Dat.Hypercore do
+defmodule Dat.Hypercore.Placeholder do
 
   def get_batch(feed, start, _end, {:config, timeout, value_encoding}) do
     []
@@ -129,5 +122,44 @@ defmodule Dat.Hypercore do
   end
 
   def on_close() do
+  end
+end
+
+defmodule Dat.Hypercore do
+  @moduledoc """
+  Documentation for Dat Hypercore.
+  """
+
+  def start(_args) do
+    # the initial cluster members
+    members = Enum.map([:a@localhost, :b@localhost, :c@localhost], fn node -> { :rakv, node } end)
+    # an arbitrary cluster name
+    clusterName = <<"dat_hypercore">>
+    # the config passed to `init/1`, must be a `map`
+    config = %{}
+    # the machine configuration
+    machine = {:module, Dat.Hypercore.Machine, config}
+    # ensure ra is started
+    Application.ensure_all_started(:ra)
+    # start a cluster instance running the `ra_kv` machine
+    :ra.start_cluster(clusterName, machine, members)
+  end
+
+  ## Client API
+
+  def new(serverid) do
+    :ra.process_command(serverid, {:new})
+  end
+
+  def get(serverid, key) do
+    :ra.process_command(serverid, {:get, key})
+  end
+
+  def set(serverid, key, feed = %Dat.Hypercore.Feed{}, index, config = %Dat.Hypercore.Config{}) do
+    :ra.process_command(serverid, {:set, key, feed, index, config})
+  end
+
+  def append(serverid, key, block) do
+    :ra.process_command(serverid, {:append, key, block})
   end
 end
